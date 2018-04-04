@@ -351,14 +351,14 @@ class phpspider
         log::$log_type = isset($configs['log_type']) ? $configs['log_type'] : false;
 
         // 彩蛋
-        $included_files = get_included_files();
-        $content = file_get_contents($included_files[0]);
-        if (!preg_match("#/\* Do NOT delete this comment \*/#", $content) || !preg_match("#/\* 不要删除这段注释 \*/#", $content))
-        {
-            $msg = "Unknown error...";
-            log::error($msg);
-            exit;
-        }
+//        $included_files = get_included_files();
+//        $content = file_get_contents($included_files[0]);
+//        if (!preg_match("#/\* Do NOT delete this comment \*/#", $content) || !preg_match("#/\* 不要删除这段注释 \*/#", $content))
+//        {
+//            $msg = "Unknown error...";
+//            log::error($msg);
+//            exit;
+//        }
 
         $configs['name']       = isset($configs['name'])       ? $configs['name']       : 'phpspider';
         $configs['proxy']      = isset($configs['proxy'])      ? $configs['proxy']      : false;
@@ -1883,7 +1883,7 @@ class phpspider
 
         if (!empty($fields)) 
         {
-            foreach ($fields as $fieldname => $data) 
+            foreach ($fields as $fieldname => &$data) 
             {
                 $pattern = "/<img.*src=[\"']{0,1}(.*)[\"']{0,1}[> \r\n\t]{1,}/isU";
                 /*$pattern = "/<img.*?src=[\'|\"](.*?(?:[\.gif|\.jpg|\.jpeg|\.png]))[\'|\"].*?[\/]?>/i"; */
@@ -1908,7 +1908,7 @@ class phpspider
                     $return = call_user_func($this->on_extract_field, $fieldname, $data, $page);
                     if (!isset($return))
                     {
-                        log::warn("on_extract_field return value can't be empty\n");
+                        log::warn("on_extract_field [$fieldname] return value can't be empty\n");
                     }
                     else 
                     {
